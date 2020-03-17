@@ -1,21 +1,23 @@
 pipeline {
     agent any
-
     stages {
         stage('SCM checkout') {
             steps {
                 git 'https://github.com/Ravi-Devops-2020/lab-devops.git'
-				echo 'SCM checkout..'
             }
         }
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building an image..'
+                sh 'docker build -t chravi2410/my-app:1.0.0 .'
             }
         }
-        stage('Publish') {
+        stage('Push Docker Image') {
+			withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
+			sh "docker login -u chravi2410 -p ${dockerHubPwd}"
+			}
             steps {
-                echo 'Publishing to repo....'
+                
+				sh 'docker push chravi2410/my-app:1.0.0'
             }
         }
     }
