@@ -1,19 +1,21 @@
 pipeline {
-    agent any 
+    agent any
+
     stages {
-        stage('SCM Checkout') { 
+        stage('SCM checkout') {
             steps {
-                echo "SCM checkout" 
+                git 'https://github.com/Ravi-Devops-2020/lab-devops.git'
+				echo 'SCM checkout..'
             }
         }
-        stage('Build Image') { 
+        stage('Build') {
             steps {
-                echo "Build image" 
+                echo 'Building an image..'
             }
         }
-        stage('Publish to repo') { 
+        stage('Publish') {
             steps {
-                echo "Publish to repo" 
+                echo 'Publishing to repo....'
             }
         }
     }
